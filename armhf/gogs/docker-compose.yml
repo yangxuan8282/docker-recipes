@@ -1,0 +1,23 @@
+version: '2'
+
+services:
+  gogs:
+    image: gogs/gogs-rpi
+    container_name: Gogs
+    restart: "always"
+    expose:
+      - 3000
+    environment:
+      - VIRTUAL_HOST=git.mydomain.com
+      - VIRTUAL_PORT=3000
+      - VIRTUAL_NETWORK=proxy-network
+      - LETSENCRYPT_HOST=git.mydomain.com
+      - LETSENCRYPT_EMAIL=me@example.com
+    volumes:
+       - ./data/gogs:/data
+
+networks:
+  default:
+    external:
+      name: proxy-network
+

@@ -1,0 +1,24 @@
+version: "2"
+
+services:
+  app:
+    image: gitlab
+    restart: "always"
+    expose:
+      - 80
+    volumes:
+      - ./etc/gitlab:/etc/gitlab
+      - ./var/opt/gitlab:/var/opt/gitlab
+      - ./var/log/gitlab:/var/log/gitlab
+    environment:
+      - VIRTUAL_HOST=git.mydomain.com
+      - VIRTUAL_PORT=80
+      - VIRTUAL_NETWORK=proxy-network
+      - LETSENCRYPT_HOST=git.mydomain.com
+      - LETSENCRYPT_EMAIL=me@example.com
+
+networks:
+  default:
+    external:
+      name: proxy-network
+

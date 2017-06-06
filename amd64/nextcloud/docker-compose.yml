@@ -1,0 +1,26 @@
+version: '2'
+
+services:
+  owncloud:
+    image: nextcloud
+    container_name: Nextcloud
+    restart: always
+    expose:
+      - 80
+    volumes:
+      - ./apps:/var/www/html/apps
+      - ./config:/var/www/html/config
+      - ./data:/var/www/html/data
+      - ./themes:/var/www/html/themes
+    environment:
+      - VIRTUAL_HOST=disk.mydomain.com
+      - VIRTUAL_PORT=80
+      - VIRTUAL_NETWORK=proxy-network
+      - LETSENCRYPT_HOST=disk.mydomain.com
+      - LETSENCRYPT_EMAIL=me@example.com
+
+networks:
+  default:
+    external:
+      name: proxy-network
+

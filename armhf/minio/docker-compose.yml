@@ -1,0 +1,25 @@
+version: '2'
+
+services:
+  minio:
+    image: minio/minio:edge-armhf
+    restart: "always"
+    expose:
+      - 9000
+    volumes:
+      - ./export:/export
+    environment:
+      - VIRTUAL_HOST=drop.mydomain.com
+      - VIRTUAL_PORT=9000
+      - VIRTUAL_NETWORK=proxy-network
+      - LETSENCRYPT_HOST=drop.mydomain.com
+      - LETSENCRYPT_EMAIL=me@example.com
+      - MINIO_ACCESS_KEY=minio
+      - MINIO_SECRET_KEY=minio123
+    command: server /export
+
+networks:
+  default:
+    external:
+      name: proxy-network
+

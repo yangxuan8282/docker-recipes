@@ -1,0 +1,25 @@
+version: "2"
+
+services:
+  app:
+    image: alexellis2/ghost-on-docker:armv6-0.11.8
+    restart: "always"
+    expose:
+      - 2368
+    volumes:
+      - ./ghost_apps:/var/www/ghost/content/apps
+      - ./data:/var/www/ghost/content/data
+      - ./images:/var/www/ghost/content/images
+      - ./themes:/var/www/ghost/content/themes
+    environment:
+      - VIRTUAL_HOST=blog.mydomain.com
+      - VIRTUAL_PORT=2368
+      - VIRTUAL_NETWORK=proxy-network
+      - LETSENCRYPT_HOST=blog.mydomain.com
+      - LETSENCRYPT_EMAIL=me@example.com
+
+networks:
+  default:
+    external:
+      name: proxy-network
+

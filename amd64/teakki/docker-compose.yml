@@ -1,0 +1,22 @@
+version: "2"
+
+services:
+  teakki:
+    image: teakki/teakki:2.2
+    restart: "always"
+    expose:
+      - 9002
+    volumes:
+      - ./data:/data
+    environment:
+      - VIRTUAL_HOST=team.mydomain.com
+      - VIRTUAL_PORT=9002
+      - VIRTUAL_NETWORK=proxy-network
+      - LETSENCRYPT_HOST=team.mydomain.com
+      - LETSENCRYPT_EMAIL=me@example.com
+
+networks:
+  default:
+    external:
+      name: proxy-network
+

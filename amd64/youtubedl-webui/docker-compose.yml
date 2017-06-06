@@ -1,0 +1,23 @@
+version: "2"
+
+services:
+  youtubedl-webui:
+    image: bixidock/youtubedl-webui
+    restart: "always"
+    expose:
+      - 80
+    volumes:
+      - "./downloads:/var/www/youtube-dl/downloads"
+    environment:
+      - VIRTUAL_HOST=u2.mydomain.com
+      - VIRTUAL_PORT=80
+      - VIRTUAL_NETWORK=proxy-network
+      - LETSENCRYPT_HOST=u2.mydomain.com
+      - LETSENCRYPT_EMAIL=me@example.com
+
+networks:
+  default:
+    external:
+      name: proxy-network
+
+

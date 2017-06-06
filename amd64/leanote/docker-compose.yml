@@ -1,0 +1,44 @@
+version: '2'
+services:
+  leanote:
+    container_name: leanote_app
+    image: zuolan/leanote
+    expose:
+      - 9000
+    volumes:
+      - ./app.conf:/leanote/conf/app.conf
+      - ./upload:/leanote/public/upload
+      - /etc/localtime:/etc/localtime:ro
+    links:
+      - mongo
+    restart: always
+    environment:
+      - VIRTUAL_HOST=note.mydomain.com
+      - VIRTUAL_PORT=9000
+      - VIRTUAL_NETWORK=proxy-network
+      - LETSENCRYPT_HOST=note.mydomain.com
+      - LETSENCRYPT_EMAIL=me@example.com
+
+  mongo:
+    container_name: leanote_db
+    image: mongo
+    volumes:
+      - ./data:/data/db
+      - /etc/localtime:/etc/localtime:ro
+    restart: always
+
+  initdb:
+    container_name: leanote_init
+    image: mongo
+    links:
+      - mongo
+    volumes:
+      - ./initdb.sh:/initdb.sh
+      - ./mongodb_backup:/mongodb_backup
+    command: sh /initdb.sh
+
+networks:
+  default:
+    external:
+      name: proxy-network
+

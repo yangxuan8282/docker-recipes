@@ -1,0 +1,22 @@
+version: "2"
+
+services:
+  app:
+    image: ghost:alpine
+    restart: "always"
+    expose:
+      - 2368
+    volumes:
+      - "./ghost:/var/lib/ghost"
+    environment:
+      - VIRTUAL_HOST=blog.mydomain.com
+      - VIRTUAL_PORT=2368
+      - VIRTUAL_NETWORK=proxy-network
+      - LETSENCRYPT_HOST=blog.mydomain.com
+      - LETSENCRYPT_EMAIL=me@example.com
+
+networks:
+  default:
+    external:
+      name: proxy-network
+

@@ -1,0 +1,23 @@
+version: '2'
+
+services:
+  portainer:
+    image: portainer/portainer:linux-arm
+    container_name: Portainer
+    restart: "always"
+    expose:
+      - 9000
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    environment:
+      - VIRTUAL_HOST=app.mydomain.com
+      - VIRTUAL_PORT=9000
+      - VIRTUAL_NETWORK=proxy-network
+      - LETSENCRYPT_HOST=app.mydomain.com
+      - LETSENCRYPT_EMAIL=me@example.com
+
+networks:
+  default:
+    external:
+      name: proxy-network
+

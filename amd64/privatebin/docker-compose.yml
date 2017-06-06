@@ -1,0 +1,24 @@
+version: "2"
+
+services:
+  privatebin:
+    image: jgeusebroek/privatebin
+    container_name: Privatebin
+    restart: always
+    expose:
+      - 80
+    volumes:
+      - ./data:/privatebin/data
+      - ./cfg:/privatebin/cfg
+    environment:
+      - VIRTUAL_HOST=paste.mydomain.com
+      - VIRTUAL_PORT=80
+      - VIRTUAL_NETWORK=proxy-network
+      - LETSENCRYPT_HOST=paste.mydomain.com
+      - LETSENCRYPT_EMAIL=me@example.com
+
+networks:
+  default:
+    external:
+      name: proxy-network
+

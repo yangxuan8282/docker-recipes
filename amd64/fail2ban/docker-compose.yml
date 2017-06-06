@@ -1,0 +1,12 @@
+version: "2"
+
+services:
+  fail2ban:
+    image: superitman/fail2ban
+    volumes:
+      - /var/log:/var/log
+      - ./jail.local:/etc/fail2ban/jail.local
+    restart: always
+    privileged: true
+    network_mode: "host"
+

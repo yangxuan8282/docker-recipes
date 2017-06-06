@@ -1,0 +1,22 @@
+version: "2"
+
+services:
+  ss-kcp:
+    image: imhang/kcp-shadowsocks-docker
+    restart: "always"
+    ports:
+      - "7443:443"
+      - "7443:443/udp"
+      - "9443:9443"
+    environment:
+      - SS_PORT=443
+      - SS_PASSWORD=
+      - SS_METHOD=chacha20
+      - SS_TIMEOUT=600
+      - KCP_PORT=9443
+      - KCP_MODE=fast
+      - MTU=1400
+      - SNDWND=1024
+      - RCVWND=1024
+
+

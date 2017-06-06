@@ -1,0 +1,22 @@
+version: "2"
+
+services:
+  tale:
+    image: pipill/tale:arm
+    restart: "always"
+    expose:
+      - 9000
+    volumes:
+      - "./tale_home:/var/tale_home"
+    environment:
+      - VIRTUAL_HOST=tale.mydomain.com
+      - VIRTUAL_PORT=9000
+      - VIRTUAL_NETWORK=proxy-network
+      - LETSENCRYPT_HOST=tale.mydomain.com
+      - LETSENCRYPT_EMAIL=me@example.com
+
+networks:
+  default:
+    external:
+      name: proxy-network
+
